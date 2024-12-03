@@ -4,6 +4,7 @@
 
 import numpy as np
 import pandas as pd
+from itertools import combinations
 
 ##################################################
 ## define function for solution A ################
@@ -37,8 +38,13 @@ def safety_check(values):
 ## define function for solution B ################
 ##################################################
 
+# original solution
+#def safety_check_with_deletion(values):
+#    return safety_check(values) or any(safety_check(values[:i] + values[i+1:]) for i in range(len(values)))
+
+# with itertools
 def safety_check_with_deletion(values):
-    return safety_check(values) or any(safety_check(values[:i] + values[i+1:]) for i in range(len(values)))
+    return safety_check(values) or any(safety_check(subvalues) for subvalues in combinations(values, len(values) - 1))
 
 ##################################################
 ## read in data and apply functions ##############
